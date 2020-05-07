@@ -4,14 +4,19 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/app.js",
+    "dev": "nodemon ./bin/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
-    "mongoose": "^5.9.11"
+    "express-validator": "^6.4.1",
+    "mongoose": "^5.9.11",
+    "mongoose-timestamp": "^0.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
