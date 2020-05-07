@@ -50,10 +50,10 @@ router.post('/login',
     const { email, password } = req.body;
     try {
       const user = await UserSchema.findOne({ email });
-      if (!user) return res.status(400).json({ success: false, code: 400, message: `User with email ${email} not found.` });
+      if (!user) return res.status(400).json({ success: false, code: 400, message: "Email or Password incorrect!" });
 
       const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) return res.status(400).json({ success: false, code: 400, message: "Password incorrect!" });
+      if (!isMatch) return res.status(400).json({ success: false, code: 400, message: "Email or Password incorrect!" });
       res.status(200).json({ success: true, code: 200, message: "login successfully" });
 
     } catch (err) {
