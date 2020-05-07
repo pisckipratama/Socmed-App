@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const UserSchema = require('../models/User');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('../config/key');
 
 router.post('/signup',
   [
@@ -54,7 +56,12 @@ router.post('/login',
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ success: false, code: 400, message: "Email or Password incorrect!" });
-      res.status(200).json({ success: true, code: 200, message: "login successfully" });
+
+      const payload = { user: { id: user._id } };
+      jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
+        if (err) throw err;
+        res.status(200).json({ success: true, code: 200, data: { _id: user._id, email: user.email, token }, message: "login successfully" });
+      });
 
     } catch (err) {
       console.error(err.message);
