@@ -22,7 +22,10 @@ router.post('/signup', [
       return res.status(400).json({ success: false, code: 400, message: "user already exits" });
     };
 
-    const newUser = new UserSchema({ email, fullname, password });
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    const newUser = new UserSchema({ email, fullname, password: hash });
     const result = await newUser.save();
     return res.status(201).json({ success: true, code: 201, data: result, message: "Register user successfully." });
   } catch (err) {
