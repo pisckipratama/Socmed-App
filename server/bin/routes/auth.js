@@ -5,6 +5,11 @@ const { check, validationResult } = require('express-validator');
 const UserSchema = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/key');
+const jwtAuth = require('../middleware/requireLogin');
+
+router.get('/listusers', jwtAuth, (req, res) => {
+  res.send('mantul bisa');
+});
 
 router.post('/signup',
   [
