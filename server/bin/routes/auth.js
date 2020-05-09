@@ -35,7 +35,8 @@ router.post('/signup',
       const hash = await bcrypt.hash(password, salt);
 
       const newUser = new UserSchema({ email, fullname, password: hash });
-      const result = await newUser.save();
+      const saveUser = await newUser.save();
+      const result = { _id: saveUser._id, email: saveUser.email, fullname: saveUser.fullname, createdAt: saveUser.createdAt, updatedAt: saveUser.updatedAt };
       return res.status(201).json({ success: true, code: 201, data: result, message: "Register user successfully." });
     } catch (err) {
       console.error(err.message);
@@ -62,7 +63,8 @@ router.post('/login',
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ success: false, code: 400, message: "Email or Password incorrect!" });
 
-      const payload = { user };
+      const payload = { user: { _id: user._id, email: user.email, fullname: user.fullname } };
+      console.log(payload);
       jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
         if (err) throw err;
         res.status(200).json({ success: true, code: 200, data: { _id: user._id, email: user.email, token }, message: "login successfully" });
@@ -71,8 +73,8 @@ router.post('/login',
     } catch (err) {
       console.error(err.message);
       return res.send(err.message);
-    }
+    };
   }
-)
+);
 
 module.exports = router;
