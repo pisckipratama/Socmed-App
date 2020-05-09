@@ -18,7 +18,6 @@ router.post(
     if (!errors.isEmpty()) return res.status(422).json({ success: false, code: 422, message: errorMsg[0].msg });
 
     try {
-      console.log(req.user);
       const newPost = new PostSchema({ title, body, postedBy: req.user });
       const sendPost = await newPost.save();
       return res.status(201).json({ success: true, code: 201, data: sendPost, message: "Post created successfully." });
@@ -32,11 +31,21 @@ router.post(
 router.get('/', jwtAuth, async (req, res) => {
   try {
     const result = await PostSchema.find().populate('postedBy', '_id fullname');
-    res.status(200).json({ success: true, code: 201,  message: "Retrive all data successfully.", data: result })
+    return res.status(200).json({ success: true, code: 201, message: "Retrive all data successfully.", data: result })
   } catch (err) {
     console.error(err.message);
     return res.send(err.message);
   }
 });
+
+router.get('/mypost', jwtAuth, async (req, res) => {
+  try {
+    const myPost = await PostSchema.find({ postedBy: req.user._id }).populate("postedBy", "_id fullname");
+    return res.status(200).json({ success: true, code: 201, message: "Retrive all data successfully.", data: myPost });
+  } catch (err) {
+    console.error(err.message);
+    return res.send(err.message);
+  }
+})
 
 module.exports = router;
