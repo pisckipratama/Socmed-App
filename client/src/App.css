@@ -82,3 +82,9 @@ i {
   padding: 20px;
   text-align: center;
 }
+
+#toast-container {
+  top: 30px;
+  right: 20px !important;
+  left: auto !important;
+}
