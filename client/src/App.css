@@ -75,3 +75,10 @@ a {
 i {
   color: rgb(187, 34, 34);
 }
+
+.posting-box {
+  margin: 10px auto;
+  max-width: 500px;
+  padding: 20px;
+  text-align: center;
+}

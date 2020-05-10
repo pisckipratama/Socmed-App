@@ -6,6 +6,7 @@ import HomeComponent from './components/screens/HomeComponent';
 import SignupComponent from './components/screens/SignupComponent';
 import ProfileComponent from './components/screens/ProfileComponent';
 import LoginComponent from './components/screens/LoginComponent';
+import CreatePostComponent from './components/screens/CreatePostComponent';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/login"> <LoginComponent /> </Route>
       <Route path="/signup"> <SignupComponent /> </Route>
       <Route path="/profile"> <ProfileComponent /> </Route>
+      <Route path="/postpicture"> <CreatePostComponent /> </Route>
     </BrowserRouter>
   );
 };
