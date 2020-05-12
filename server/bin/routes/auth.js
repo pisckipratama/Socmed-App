@@ -67,7 +67,7 @@ router.post('/login',
       console.log(payload);
       jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
         if (err) throw err;
-        res.status(200).json({ success: true, code: 200, data: { _id: user._id, email: user.email, token }, message: "login successfully" });
+        res.status(200).json({ success: true, code: 200, data: { user: { _id: user._id, email: user.email, fullname: user.fullname }, token }, message: "login successfully" });
       });
 
     } catch (err) {
