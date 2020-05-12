@@ -22,7 +22,6 @@ const CreatePostComponent = () => {
       }).then(res => res.json())
         .then(data => {
           if (!data.success) {
-            console.log("url ", url);
             M.toast({ html: data.message, classes: "#e57373 red lighten-2" });
           } else {
             M.toast({ html: data.message, classes: "#a5d6a7 green lighten-2" });
@@ -43,9 +42,7 @@ const CreatePostComponent = () => {
       method: 'POST',
       body: data
     }).then(res => res.json())
-      .then(data => {
-        setUrl(data.url)
-      })
+      .then(data => setUrl(data.url))
       .catch(err => console.log(err));
   };
 
