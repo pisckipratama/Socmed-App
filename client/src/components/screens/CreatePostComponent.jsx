@@ -15,6 +15,7 @@ const CreatePostComponent = () => {
     data.append('upload_preset', 'socmedApp');
     data.append('cloud_name', 'dtx75b7pa');
 
+    // upload photo to cloudinary
     fetch('https://api.cloudinary.com/v1_1/dtx75b7pa/image/upload', {
       method: 'POST',
       body: data
@@ -22,6 +23,7 @@ const CreatePostComponent = () => {
       .then(data => setUrl(data.url))
       .catch(err => console.log(err));
 
+    // upload data to backend
     fetch('http://192.168.1.7:5000/api/posts/v1', {
       method: "POST",
       headers: {
@@ -30,7 +32,6 @@ const CreatePostComponent = () => {
       body: JSON.stringify({ title, body, pic: url })
     }).then(res => res.json())
       .then(data => {
-        console.log(data);
         if (!data.success) {
           M.toast({ html: data.message, classes: "#e57373 red lighten-2" });
         } else {
@@ -38,7 +39,7 @@ const CreatePostComponent = () => {
           history.push('/');
         };
       }).catch(err => console.log(err));
-  }
+  };
 
   return (
     <div className="card input-field posting-box">
@@ -58,6 +59,6 @@ const CreatePostComponent = () => {
       <button className="btn waves-effect waves-light green lighten-1" onClick={() => postDetails()}>Post</button>
     </div>
   )
-}
+};
 
 export default CreatePostComponent;
