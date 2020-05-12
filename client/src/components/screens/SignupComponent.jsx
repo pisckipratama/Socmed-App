@@ -22,7 +22,7 @@ const SignupComponent = () => {
           M.toast({ html: data.message, classes: "#a5d6a7 green lighten-2" });
           history.push('/login');
         };
-      });
+      }).catch(err => console.log(err));
   }
 
   return (

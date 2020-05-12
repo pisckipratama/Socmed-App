@@ -3,7 +3,8 @@ const { JWT_SECRET } = require('../config/key');
 
 module.exports = function (req, res, next) {
   const token = req.header("Authorization");
-  if (!token) return res.status(401).send("Unauthorize!");
+  // res.status(401).send("Unauthorize!");
+  if (!token) return res.status(401).json({ success: false, code: 401, message: "You must be logged in!" });
 
   try {
     const decode = jwt.verify(token, JWT_SECRET);
@@ -11,6 +12,7 @@ module.exports = function (req, res, next) {
     next();
   } catch (err) {
     console.error(err.message);
-    return res.status(500).json({ message: err.message });
+    // res.status(500).json({ message: err.message });
+    return res.status(500).json({ success: false, code: 500, message: err.message });
   }
 };

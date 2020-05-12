@@ -8,17 +8,18 @@ router.post(
   '/',
   [
     check("title", "please insert the title").not().isEmpty(),
-    check("body", "please insert the body of post").not().isEmpty()
+    check("body", "please insert the body of post").not().isEmpty(),
+    check("pic", "please insert your photo").not().isEmpty()
   ],
   jwtAuth,
   async (req, res) => {
-    const { title, body } = req.body;
+    const { title, body, pic } = req.body;
     const errors = validationResult(req);
     const errorMsg = errors.array();
     if (!errors.isEmpty()) return res.status(422).json({ success: false, code: 422, message: errorMsg[0].msg });
 
     try {
-      const newPost = new PostSchema({ title, body, postedBy: req.user });
+      const newPost = new PostSchema({ title, body, pic, postedBy: req.user });
       const sendPost = await newPost.save();
       return res.status(201).json({ success: true, code: 201, data: sendPost, message: "Post created successfully." });
     } catch (err) {
