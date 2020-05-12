@@ -15,10 +15,11 @@ const LoginComponent = () => {
       body: JSON.stringify({ email, password })
     }).then(res => res.json())
       .then(data => {
-        console.log(data);
         if (!data.success) {
           M.toast({ html: data.message, classes: "#e57373 red lighten-2" });
         } else {
+          localStorage.setItem('jwt', data.data.token);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
           M.toast({ html: data.message, classes: "#a5d6a7 green lighten-2" });
           history.push('/');
         };

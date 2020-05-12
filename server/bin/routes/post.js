@@ -19,7 +19,7 @@ router.post(
     if (!errors.isEmpty()) return res.status(422).json({ success: false, code: 422, message: errorMsg[0].msg });
 
     try {
-      const newPost = new PostSchema({ title, body, pic, postedBy: req.user });
+      const newPost = new PostSchema({ title, body, photo: pic, postedBy: req.user });
       const sendPost = await newPost.save();
       return res.status(201).json({ success: true, code: 201, data: sendPost, message: "Post created successfully." });
     } catch (err) {

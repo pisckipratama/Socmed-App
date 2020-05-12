@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import M from 'materialize-css';
 import { useHistory } from 'react-router-dom';
 
@@ -8,6 +8,29 @@ const CreatePostComponent = () => {
   const [body, setBody] = useState('');
   const [image, setImage] = useState('');
   const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    if (url) {
+      // upload data to backend
+      fetch('http://192.168.1.7:5000/api/posts/v1', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem('jwt')
+        },
+        body: JSON.stringify({ title, body, pic: url })
+      }).then(res => res.json())
+        .then(data => {
+          if (!data.success) {
+            console.log("url ", url);
+            M.toast({ html: data.message, classes: "#e57373 red lighten-2" });
+          } else {
+            M.toast({ html: data.message, classes: "#a5d6a7 green lighten-2" });
+            history.push('/');
+          };
+        }).catch(err => console.log(err));
+    }
+  }, [url, body, history, title]);
 
   const postDetails = () => {
     const data = new FormData();
@@ -20,25 +43,10 @@ const CreatePostComponent = () => {
       method: 'POST',
       body: data
     }).then(res => res.json())
-      .then(data => setUrl(data.url))
-      .catch(err => console.log(err));
-
-    // upload data to backend
-    fetch('http://192.168.1.7:5000/api/posts/v1', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ title, body, pic: url })
-    }).then(res => res.json())
       .then(data => {
-        if (!data.success) {
-          M.toast({ html: data.message, classes: "#e57373 red lighten-2" });
-        } else {
-          M.toast({ html: data.message, classes: "#a5d6a7 green lighten-2" });
-          history.push('/');
-        };
-      }).catch(err => console.log(err));
+        setUrl(data.url)
+      })
+      .catch(err => console.log(err));
   };
 
   return (
