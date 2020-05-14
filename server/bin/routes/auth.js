@@ -64,7 +64,6 @@ router.post('/login',
       if (!isMatch) return res.status(400).json({ success: false, code: 400, message: "Email or Password incorrect!" });
 
       const payload = { user: { _id: user._id, email: user.email, fullname: user.fullname } };
-      console.log(payload);
       jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
         if (err) throw err;
         res.status(200).json({ success: true, code: 200, data: { user: { _id: user._id, email: user.email, fullname: user.fullname }, token }, message: "login successfully" });
