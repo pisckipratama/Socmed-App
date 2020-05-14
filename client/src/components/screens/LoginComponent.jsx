@@ -27,7 +27,10 @@ const LoginComponent = () => {
           history.push('/');
         };
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        M.toast({ html: err.message, classes: "#e57373 red lighten-2" });
+      });
   }
 
   return (
