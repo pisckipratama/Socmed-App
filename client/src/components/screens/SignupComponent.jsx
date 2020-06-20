@@ -8,7 +8,7 @@ const SignupComponent = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const PostData = () => {
-    fetch('http://192.168.1.7:5000/api/users/v1/signup', {
+    fetch('http://localhost:5000/api/users/v1/signup', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

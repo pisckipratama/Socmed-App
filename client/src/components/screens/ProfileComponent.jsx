@@ -5,7 +5,7 @@ const ProfileComponent = () => {
   const [myPict, setMyPict] = useState([]);
   const { state, dispatch } = useContext(UserContext);
   useEffect(() => {
-    fetch('http://192.168.1.7:5000/api/posts/v1/mypost', {
+    fetch('http://localhost:5000/api/posts/v1/mypost', {
       headers: {
         "Authorization": localStorage.getItem('jwt')
       }

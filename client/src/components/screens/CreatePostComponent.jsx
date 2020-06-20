@@ -12,7 +12,7 @@ const CreatePostComponent = () => {
   useEffect(() => {
     if (url) {
       // upload data to backend
-      fetch('http://192.168.1.7:5000/api/posts/v1', {
+      fetch('http://localhost:5000/api/posts/v1', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

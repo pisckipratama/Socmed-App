@@ -4,7 +4,7 @@ const HomeComponent = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.7:5000/api/posts/v1', {
+    fetch('http://localhost:5000/api/posts/v1', {
       headers: {
         "Authorization": localStorage.getItem('jwt')
       }
